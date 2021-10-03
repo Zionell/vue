@@ -2,23 +2,26 @@
   <div :class="[$style.wrapper]">
     <button
         :class="[$style.page]"
-        v-for="(page,ind) in countPages"
+        v-for="page in getCountPages"
         :key="page"
-        @click="changePage(ind)"
+        @click="changePage(page)"
     >{{ page }}
     </button>
   </div>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from "vuex";
+
 export default {
   name: "Paginate",
-  props: {
-    countPages: Number
+  computed:{
+    ...mapGetters(['getCountPages'])
   },
   methods:{
+    ...mapMutations(['setNewRenderPage']),
     changePage(pageNumber){
-      this.$emit("paginate", pageNumber)
+      this.setNewRenderPage( pageNumber)
     }
   }
 }
