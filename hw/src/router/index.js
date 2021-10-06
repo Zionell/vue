@@ -17,7 +17,7 @@ const router = new Router({
         {
             path: '/dashboard/:page',
             name: 'Dashboard',
-            component: dashboard
+            component: dashboard,
         },
         {
             path: '/calculator',
@@ -25,35 +25,24 @@ const router = new Router({
             component: calculator
         },
         {
-            path: '/add/payment/*?value=*',
+            path: '/add/payment/*',
             name: 'AddPayment',
             component: dashboard
         },
         {
-            path: '/404',
+            path: '*',
             name: 'NotFound',
             component: Page404
-        },
-        {
-            path: '*',
-            redirect: '/404'
         }
-
     ]
 })
 
-router.beforeEach((to, from, next) =>{
+router.beforeEach((to, from, next) => {
     if (to.name === 'dashboard') {
-        next({ path: '/dashboard/1' })
+        next({path: '/dashboard/1'})
     } else {
         next()
     }
 })
-
-// router.afterEach((to)=>{
-    // if (to.name === 'AddPayment') {
-    //
-    // }
-// })
 
 export default router;

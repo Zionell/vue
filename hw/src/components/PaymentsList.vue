@@ -30,11 +30,11 @@ export default {
   },
   computed: {
     ...mapGetters(['getPaymentsList']),
-    checkPageNumber(){
-      return  +this.$route.params.page
+    checkPageNumber() {
+      return +this.$route.params.page
     },
     getRenderPage() {
-      let start = ( this.checkPageNumber-1) * this.pageLength;
+      let start = (this.checkPageNumber - 1) * this.pageLength;
       let end = start + this.pageLength;
       return this.getPaymentsList.slice(start, end)
     }
