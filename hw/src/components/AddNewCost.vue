@@ -3,6 +3,13 @@
     <button :class="[$style.button]" @click="showForm">
       ADD NEW COST +
     </button>
+    <div>
+      <router-link
+          to="/add/payment/"
+      >
+        Food
+      </router-link>
+    </div>
     <div :class="[$style.formWrapper]" v-show="addForm">
       <label>Choose date
         <input v-model="date" type="date" required="required">
@@ -42,8 +49,8 @@ export default {
       this.addForm = !this.addForm
     },
     add(){
-      let {id, date, category, cost} = this;
-      this.setNewCost({id,date, category, cost})
+      let { date, category, cost} = this;
+      this.setNewCost({date, category, cost})
     }
   }
 }
