@@ -17,6 +17,9 @@ const store = new Vuex.Store({
         },
         setNewCost(state, payload) {
             state.paymentsList.unshift(payload)
+        },
+        deleteCost(state){
+            state.paymentsList.unshift()
         }
     },
     getters: {

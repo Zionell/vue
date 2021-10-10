@@ -11,6 +11,9 @@
       <p>{{ item.date }}</p>
       <p>{{ item.category }}</p>
       <p>{{ item.cost }}</p>
+      <button
+        @click="openModal"
+      >...</button>
     </div>
   </div>
 </template>
@@ -18,8 +21,11 @@
 <script>
 import {mapGetters} from "vuex";
 
+
 export default {
   name: "PaymentsList",
+  components:{
+  },
   props: {
     pageLength: Number
   },
@@ -39,8 +45,11 @@ export default {
       return this.getPaymentsList.slice(start, end)
     }
   },
-  mounted() {
-    this.page = +this.$route.params.page
+  methods:{
+    openModal(){
+      this.$modal.show("PopupWindow", { compName: "PopupWindow" });
+    },
+
   }
 }
 </script>
@@ -53,7 +62,7 @@ export default {
 
 .row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border: 1px solid #737373;
   border-radius: 10px;
   background: #e5e5e5;

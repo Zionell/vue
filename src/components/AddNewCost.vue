@@ -23,64 +23,30 @@
     <button :class="[$style.button]" @click="showForm">
       ADD NEW COST +
     </button>
-    <div :class="[$style.formWrapper]" v-show="addForm">
-      <label>Choose date
-        <input v-model="date" type="date" required="required">
-      </label>
-      <label>Choose category
-        <select v-model="category" required="required">
-          <option v-for="item in getCategory" :key="item">{{ item }}</option>
-        </select>
-      </label>
-      <label>Add cost
-        <input v-model="cost" type="number" min="0" required="required">
-      </label>
-      <button :class="[$style.button]" @click="add">Add</button>
-    </div>
+    <FormInputs
+        v-show="addForm"
+    />
   </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import FormInputs from "./FormInputs";
 
 export default {
   name: "AddNewCost",
+  components: {
+    FormInputs
+  },
   data() {
     return {
       addForm: false,
-      date: '',
-      category: '',
-      cost: 0,
     }
   },
-  computed: {
-    ...mapGetters(['getCategory'])
-  },
   methods: {
-    ...mapMutations(['setNewCost']),
     showForm() {
       this.addForm = !this.addForm
     },
-    add() {
-      let {date, category, cost} = this;
-      this.setNewCost({date, category, cost})
-    }
   },
-  watch: {
-    $route(to) {
-      this.addForm = true;
-      let fullDate = new Date();
-      let arrDate = [];
-      arrDate.push(fullDate.getDay());
-      arrDate.push(fullDate.getMonth());
-      arrDate.push(fullDate.getFullYear());
-      this.date = arrDate.join(".");
-      this.category = to.params.pathMatch;
-      this.cost = to.query.value;
-      this.add();
-      this.$router.push({path: '/dashboard/1'}).catch(()=>{});
-    }
-  }
 }
 </script>
 
@@ -118,13 +84,6 @@ export default {
   color: cadetblue;
 }
 
-.formWrapper {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 300px;
-}
 
 label {
   display: flex;
@@ -134,10 +93,5 @@ label {
   margin-bottom: 20px;
 }
 
-input, select {
-  width: 150px;
-  border: 1px solid green;
-  border-radius: 5px;
-  padding: 3px;
-}
+
 </style>
