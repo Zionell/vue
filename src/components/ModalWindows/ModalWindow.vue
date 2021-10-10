@@ -1,47 +1,98 @@
 <template>
   <div :class="[$style.wrapper]">
-<!--    <div :class="header">{{ modalWindowSettings.header }}</div>-->
+    <button
+        v-show="showBtn"
+        :class="[$style.btn]"
+        @click="showForm"
+    >Edit
+    </button>
+    <button
+        v-show="showBtn"
+        :class="[$style.btn]"
+        @click="deleteItem"
+    >Delete
+    </button>
+    <button
+        :class="[$style.btn]"
+        @click="closeModal"
+    >Close
+    </button>
     <div :class="[$style.content]">
-      <component :is="modalWindowSettings.compName"></component>
-    </div>
-    <div :class="[$style.btn]">
-      <button @click="closeModal">Close</button>
+      <component :is="formShow"></component>
     </div>
   </div>
-
 </template>
 
 <script>
 
 
 import FormInputs from "../FormInputs";
-import PopupWindow from "../PopupWindow";
+import {mapMutations} from "vuex";
 
 export default {
   name: "ModalWindow",
   props: {
-    modalShow: String,
+    modalShow: Number,
     modalWindowSettings: Object
   },
-  components:{
-    FormInputs,
-    PopupWindow
+  data() {
+    return {
+      formShow: false,
+      showBtn:true,
+      date: '',
+      category: '',
+      cost: 0,
+    }
   },
-  methods:{
-    closeModal(){
-      this.$modal.hide()}
+  components: {
+    FormInputs
+  },
+  methods: {
+    ...mapMutations(["deleteCost"]),
+    closeModal() {
+      this.$modal.hide()
+    },
+    showForm() {
+      this.showBtn=!this.showBtn
+      this.formShow = this.modalWindowSettings.compName
+    },
+    deleteItem() {
+      this.deleteCost(this.modalWindowSettings.item)
+      this.$modal.hide()
+    }
+  },
+  mounted() {
+    this.category = 15;
   }
 }
 </script>
 
 <style module>
-.wrapper{
+.wrapper {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
+  top: 60px;
+  z-index: 50;
+  right: -25px;
+  padding: 30px 10px;
+  background: #999;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-.btn{
+
+.btn {
+  background: cadetblue;
+  border: 1px solid cadetblue;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  min-width: 150px;
+  transition: 0.3s linear;
+}
+.btn:hover {
+  background: #ffffff;
+  color: cadetblue;
 }
 </style>

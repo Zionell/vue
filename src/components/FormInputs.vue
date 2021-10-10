@@ -11,7 +11,7 @@
     <label>Add cost
       <input v-model="cost" type="number" min="0" required="required">
     </label>
-    <button :class="[$style.button]" @click="add">Add</button>
+    <button :class="[$style.button]" @click="add">Save</button>
   </div>
 </template>
 
@@ -22,20 +22,21 @@ export default {
   name: "FormInputs",
   data() {
     return {
+      id: 0,
       date: '',
       category: '',
       cost: 0,
     }
   },
   computed: {
-    ...mapGetters(['getCategory'])
+    ...mapGetters(['getCategory', 'getPaymentsList'])
   },
   methods: {
     ...mapMutations(['setNewCost']),
     add() {
       let {date, category, cost} = this;
       this.setNewCost({date, category, cost})
-    }
+    },
   },
   watch: {
     $route(to) {
@@ -82,5 +83,10 @@ input, select {
   color: white;
   font-size: 20px;
   transition: 0.3s linear;
+}
+
+.button:hover {
+  background: #ffffff;
+  color: cadetblue;
 }
 </style>
