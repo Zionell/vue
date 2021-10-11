@@ -26,6 +26,7 @@ export default {
       date: '',
       category: '',
       cost: 0,
+      oldData: 0
     }
   },
   computed: {
@@ -34,21 +35,33 @@ export default {
   methods: {
     ...mapMutations(['setNewCost']),
     add() {
-      let {date, category, cost} = this;
-      this.setNewCost({date, category, cost})
+      let {date, category, cost, oldData} = this;
+      let data = {
+        date: date,
+        category: category,
+        cost: cost
+      }
+      this.setNewCost({data, oldData});
     },
   },
   watch: {
     $route(to) {
       if (to.name === 'AddPayment') {
-        this.addForm = true;
         let fullDate = new Date();
-        this.date = fullDate.getFullYear()+'-'+(fullDate.getMonth()+1)+'-'+fullDate.getDate();
+        this.date = fullDate.getFullYear() + '-' + (fullDate.getMonth() + 1) + '-' + fullDate.getDate();
         this.category = to.params.pathMatch;
         this.cost = to.query.value;
         this.add();
-        this.$emit("showFrom")
+        this.$emit("showForm")
         this.$router.push({path: '/dashboard/1'}).catch(() => {
+        })
+      } else if (to.name === 'EditPayment') {
+        this.oldData = to.params.item;
+        this.date = to.params.item.date;
+        this.category = to.params.item.category;
+        this.cost = to.params.item.cost;
+        this.$emit("showForm")
+        this.$router.push({path: `${to.params.page}`}).catch(() => {
         })
       }
     }

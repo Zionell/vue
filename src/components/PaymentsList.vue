@@ -59,12 +59,11 @@ export default {
   },
   methods: {
     openModal(id, item) {
-      this.$modal.show("PopupWindow", {compName: "ModalFormInputs", id: id, item: item});
+      this.$modal.show("PopupWindow", {compName: "FormInputs", id: id, item: item});
     },
     onShow({settings}) {
         this.modalShow = settings.id
         this.modalWindowSettings = settings
-      // }
     },
     onClose() {
       this.modalShow = ''

@@ -24,7 +24,7 @@
       ADD NEW COST +
     </button>
     <FormInputs
-        @showFrom="addForm=true"
+        @showForm="addForm=true"
         v-show="addForm"
     />
   </div>

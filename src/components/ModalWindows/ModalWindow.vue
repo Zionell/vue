@@ -1,13 +1,11 @@
 <template>
   <div :class="[$style.wrapper]">
     <button
-        v-show="showBtn"
         :class="[$style.btn]"
         @click="showForm"
     >Edit
     </button>
     <button
-        v-show="showBtn"
         :class="[$style.btn]"
         @click="deleteItem"
     >Delete
@@ -17,15 +15,11 @@
         @click="closeModal"
     >Close
     </button>
-    <div :class="[$style.content]">
-      <component :is="formShow" :data="modalWindowSettings.item"></component>
-    </div>
   </div>
 </template>
 
 <script>
 import {mapMutations} from "vuex";
-import ModalFormInputs from "./ModalFormInputs";
 
 export default {
   name: "ModalWindow",
@@ -34,14 +28,7 @@ export default {
     modalWindowSettings: Object
   },
   data() {
-    return {
-      formShow: false,
-      showBtn:true,
-      cost:15,
-    }
-  },
-  components: {
-    ModalFormInputs
+    return {}
   },
   methods: {
     ...mapMutations(["deleteCost"]),
@@ -49,8 +36,8 @@ export default {
       this.$modal.hide()
     },
     showForm() {
-      this.showBtn=!this.showBtn
-      this.formShow = this.modalWindowSettings.compName
+      this.$router.push({name: 'EditPayment', params: {item: this.modalWindowSettings.item, page:this.$route.fullPath}})
+      this.$modal.hide()
     },
     deleteItem() {
       this.deleteCost(this.modalWindowSettings.item)
@@ -86,6 +73,7 @@ export default {
   min-width: 150px;
   transition: 0.3s linear;
 }
+
 .btn:hover {
   background: #ffffff;
   color: cadetblue;

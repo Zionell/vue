@@ -16,16 +16,15 @@ const store = new Vuex.Store({
             state.categories = payload
         },
         setNewCost(state, payload) {
-            state.paymentsList.unshift(payload)
-        },
-        editNewCost(state, payload) {
-            state.paymentsList.splice(state.paymentsList.findIndex(item => {
-                if (item === payload.data) {
-                    return item
-                }
-                return false
-            }), 1, payload.editData)
-            console.log(payload)
+            if(state.paymentsList.indexOf(payload.oldData)===-1){
+                state.paymentsList.unshift(payload.data)
+            }else{
+                state.paymentsList.splice(state.paymentsList.findIndex(item => {
+                    if (item === payload.oldData) {
+                        return item
+                    }
+                }), 1, payload.data)
+            }
         },
         deleteCost(state, payload) {
             state.paymentsList.splice(state.paymentsList.indexOf(payload), 1)
@@ -37,7 +36,7 @@ const store = new Vuex.Store({
     },
     actions: {
         fetchData({commit}) {
-            return fetch('https://raw.githubusercontent.com/Zionell/VuexData/main/newData.json')
+            return fetch('https://raw.githubusercontent.com/Zionell/VuexData/main/finalData.json')
                 .then(response => response.json())
                 .then(data =>
                     commit('setInitData', data)
