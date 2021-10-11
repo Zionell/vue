@@ -1,5 +1,6 @@
 <template>
-  <div :class="[$style.formWrapper]">
+  <div
+      :class="[$style.formWrapper]">
     <label>Choose date
       <input v-model="date" type="date" required="required">
     </label>
@@ -20,6 +21,9 @@ import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "FormInputs",
+  props: {
+    data: Object
+  },
   data() {
     return {
       id: 0,
@@ -32,26 +36,21 @@ export default {
     ...mapGetters(['getCategory', 'getPaymentsList'])
   },
   methods: {
-    ...mapMutations(['setNewCost']),
+    ...mapMutations(['editNewCost']),
     add() {
-      let {date, category, cost} = this;
-      this.setNewCost({date, category, cost})
+      let {date, category, cost, data} = this;
+      let editData = {
+        date: date,
+        category: category,
+        cost: cost,
+      }
+      this.editNewCost({editData, data})
     },
   },
-  watch: {
-    $route(to) {
-      if (to.name === 'AddPayment') {
-        this.addForm = true;
-        let fullDate = new Date();
-        this.date = fullDate.getFullYear()+'-'+(fullDate.getMonth()+1)+'-'+fullDate.getDate();
-        this.category = to.params.pathMatch;
-        this.cost = to.query.value;
-        this.add();
-        this.$emit("showFrom")
-        this.$router.push({path: '/dashboard/1'}).catch(() => {
-        })
-      }
-    }
+  mounted() {
+    this.date = this.data.date;
+    this.category = this.data.category;
+    this.cost = this.data.cost;
   }
 }
 </script>

@@ -18,16 +18,14 @@
     >Close
     </button>
     <div :class="[$style.content]">
-      <component :is="formShow"></component>
+      <component :is="formShow" :data="modalWindowSettings.item"></component>
     </div>
   </div>
 </template>
 
 <script>
-
-
-import FormInputs from "../FormInputs";
 import {mapMutations} from "vuex";
+import ModalFormInputs from "./ModalFormInputs";
 
 export default {
   name: "ModalWindow",
@@ -39,13 +37,11 @@ export default {
     return {
       formShow: false,
       showBtn:true,
-      date: '',
-      category: '',
-      cost: 0,
+      cost:15,
     }
   },
   components: {
-    FormInputs
+    ModalFormInputs
   },
   methods: {
     ...mapMutations(["deleteCost"]),
@@ -62,7 +58,6 @@ export default {
     }
   },
   mounted() {
-    this.category = 15;
   }
 }
 </script>

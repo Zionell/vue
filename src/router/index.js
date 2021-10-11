@@ -32,6 +32,11 @@ const router = new Router({
             component: ()=>import("../pages/dashboard")
         },
         {
+            path: '/edit/payment/*',
+            name: 'EditPayment',
+            component: ()=>import("../pages/dashboard")
+        },
+        {
             path: '*',
             name: 'NotFound',
             component: ()=>import("../pages/Page404")
