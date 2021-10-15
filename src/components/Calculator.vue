@@ -2,9 +2,13 @@
   <div :class="[$style.wrapper]">
     <div>
       <input
+          name="operand1"
+          type="number"
           v-model.number="operand1"
       />
       <input
+          name="operand2"
+          type="number"
           v-model.number="operand2"
       />
       = {{ result }}
@@ -23,7 +27,7 @@
         v-if="check">
       <input
           type="radio"
-          name="changeOperand"
+          name="changeOperand1"
           value="operand1"
           v-model="operand"
       >
@@ -34,7 +38,7 @@
         v-if="check">
       <input
           type="radio"
-          name="changeOperand"
+          name="changeOperand2"
           value="operand2"
           v-model="operand"
       >
@@ -43,13 +47,15 @@
     <div :class="[$style.keyboard]">
       <div v-show="check" :class="[$style.keyboard_numbers]">
         <button
-            v-for="(num,ind) in numbers"
+            v-for="(num,ind) in 10"
             :key="ind"
+            :name="ind"
             @click="writeNum(ind)"
         >
           {{ ind }}
         </button>
         <button
+            name="delete"
             @click="deleteNum()"
         >
           &#129044;
@@ -58,6 +64,7 @@
       <button
           v-for="operator in operators"
           :key="operator"
+          :name="operator"
           @click="calcHandler(operator)"
       >
         {{ operator }}
@@ -71,12 +78,11 @@ export default {
   name: "Calculator",
   data() {
     return {
-      operand1Arr: [],
-      operand2Arr: [],
-      operand: 1,
+      operand1: '',
+      operand2: '',
+      operand: 'operand1',
       check: false,
       result: 0,
-      numbers: Array(10),
       operators: [
         'plus',
         'minus',
@@ -87,27 +93,27 @@ export default {
       ]
     }
   },
-  computed: {
-    operand1() {
-      return this.operand1Arr.join('')
-    },
-    operand2() {
-      return this.operand2Arr.join('')
-    }
-  },
   methods: {
     writeNum(num) {
       if (this.operand == "operand1") {
-        return this.operand1Arr.push(num)
+        this.operand1 = "" + this.operand1;
+        this.operand1 += num
+        return +this.operand1
       } else {
-        return this.operand2Arr.push(num)
+        this.operand2 = "" + this.operand2;
+        this.operand2 += num
+        return +this.operand2
       }
     },
     deleteNum() {
       if (this.operand == "operand1") {
-        return this.operand1Arr.pop()
+        this.operand1 = "" + this.operand1;
+        this.operand1 = this.operand1.replace(/\d\b/, "");
+        this.operand1 = +this.operand1;
       } else {
-        return this.operand2Arr.pop()
+        this.operand2 = "" + this.operand2;
+        this.operand2 = this.operand2.replace(/\d\b/, "");
+        this.operand2 = +this.operand2;
       }
     },
     calcHandler(action) {
@@ -119,18 +125,18 @@ export default {
         case 'multiply':
           return this.result = this.operand1 * this.operand2;
         case 'devide':
-          if (this.operand2 !== 0) {
+          if (this.operand2 != 0) {
             return this.result = this.operand1 / this.operand2;
           }
-          alert("На ноль делить нельзя")
+          this.result="На ноль делить нельзя";
           break;
         case 'degree':
           return this.result = this.operand1 ** this.operand2;
         case 'floorDevide':
-          if (this.operand2 !== 0) {
+          if (this.operand2 != 0) {
             return this.result = Math.floor(this.operand1 / this.operand2);
           }
-          alert("На ноль делить нельзя")
+          this.result="На ноль делить нельзя";
           break;
       }
     }
@@ -158,7 +164,8 @@ export default {
   grid-template-columns: repeat(3, 40px);
   grid-template-rows: repeat(4, 40px);
 }
-.label{
+
+.label {
   display: flex;
   justify-content: space-between;
   align-items: center;
