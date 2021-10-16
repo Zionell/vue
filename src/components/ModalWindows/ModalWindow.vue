@@ -52,9 +52,9 @@ export default {
 <style module>
 .wrapper {
   position: absolute;
-  top: 60px;
+  top: 0;
   z-index: 50;
-  right: -25px;
+  right: 0;
   padding: 30px 10px;
   background: #999;
   border-radius: 10px;
