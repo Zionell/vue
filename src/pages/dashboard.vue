@@ -12,7 +12,7 @@
           <Paginate :pageLength="pageLength"/>
       </v-col>
       <v-col>
-        <Diagram/>
+        <Diagram :class="[$style.diagram]"/>
       </v-col>
     </v-row>
   </v-container>
@@ -47,3 +47,10 @@ export default {
   }
 }
 </script>
+
+<style module>
+.diagram{
+  width: 350px;
+  margin: 0 auto;
+}
+</style>
