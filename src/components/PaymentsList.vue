@@ -7,7 +7,7 @@
       <p>Cost</p>
     </div>
     <div :class="[$style.row]" v-for="(item,ind) in getRenderPage" :key="ind">
-      <p>{{ ind+1 }}</p>
+      <p>{{ ind + 1 }}</p>
       <p>{{ item.date }}</p>
       <p>{{ item.category }}</p>
       <p>{{ item.cost }}</p>
@@ -20,8 +20,27 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "PaymentsList",
+  props: {
+    pageLength: Number
+  },
+  data() {
+    return {
+      page: 1,
+    }
+  },
   computed: {
-    ...mapGetters(['getRenderPage'])
+    ...mapGetters(['getPaymentsList']),
+    checkPageNumber() {
+      return +this.$route.params.page
+    },
+    getRenderPage() {
+      let start = (this.checkPageNumber - 1) * this.pageLength;
+      let end = start + this.pageLength;
+      return this.getPaymentsList.slice(start, end)
+    }
+  },
+  mounted() {
+    this.page = +this.$route.params.page
   }
 }
 </script>

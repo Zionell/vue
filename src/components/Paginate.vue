@@ -1,27 +1,28 @@
 <template>
   <div :class="[$style.wrapper]">
-    <button
+    <router-link
         :class="[$style.page]"
         v-for="page in getCountPages"
         :key="page"
-        @click="changePage(page)"
-    >{{ page }}
-    </button>
+        :to="'/dashboard/'+page"
+    >
+      {{ page }}
+    </router-link>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Paginate",
-  computed:{
-    ...mapGetters(['getCountPages'])
+  props: {
+    pageLength: Number
   },
-  methods:{
-    ...mapMutations(['setNewRenderPage']),
-    changePage(pageNumber){
-      this.setNewRenderPage( pageNumber)
+  computed: {
+    ...mapGetters(['getPaymentsList']),
+    getCountPages(){
+      return Math.ceil(this.getPaymentsList.length/this.pageLength)
     }
   }
 }
@@ -41,9 +42,15 @@ export default {
   border: 1px solid cadetblue;
   background: cadetblue;
   transition: 0.2s linear;
+  color: #000;
+  text-decoration: none;
 }
+
 .page:hover {
   color: cadetblue;
+  background: #ffffff;
+}
+.active{
   background: #ffffff;
 }
 </style>
