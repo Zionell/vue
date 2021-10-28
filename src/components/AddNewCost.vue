@@ -48,6 +48,26 @@ export default {
       this.addForm = !this.addForm
     },
   },
+
+=======
+  watch: {
+    $route(to) {
+      if(to.name==='AddPayment'){
+        this.addForm = true;
+        let fullDate = new Date();
+        let arrDate = [];
+        arrDate.push(fullDate.getDay());
+        arrDate.push(fullDate.getMonth());
+        arrDate.push(fullDate.getFullYear());
+        this.date = arrDate.join(".");
+        this.category = to.params.pathMatch;
+        this.cost = to.query.value;
+        this.add();
+        this.$router.push({path: '/dashboard/1'}).catch(()=>{});
+      }
+    }
+  }
+
 }
 </script>
 
