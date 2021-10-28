@@ -19,9 +19,9 @@ import {mapActions} from "vuex";
 
 export default {
   name: "dashboard",
-  data(){
-    return{
-      pageLength:5
+  data() {
+    return {
+      pageLength: 5
     }
   },
   components: {
@@ -33,8 +33,8 @@ export default {
     ...mapActions(['fetchData', 'fetchCategory'])
   },
   beforeMount() {
-    this.fetchData(),
-        this.fetchCategory()
+    this.fetchData()
+    this.fetchCategory()
   }
 }
 </script>

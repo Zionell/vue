@@ -21,6 +21,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getPaymentsList']),
+    // activePage(){}
     getCountPages(){
       return Math.ceil(this.getPaymentsList.length/this.pageLength)
     }
@@ -50,7 +51,7 @@ export default {
   color: cadetblue;
   background: #ffffff;
 }
-.active{
+:global(.router-link-active) {
   background: #ffffff;
 }
 </style>

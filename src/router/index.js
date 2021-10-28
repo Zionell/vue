@@ -1,8 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import dashboard from "../pages/dashboard";
-import calculator from "../pages/calculator";
-import Page404 from "../pages/Page404";
 
 Vue.use(Router)
 
@@ -10,29 +7,39 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'dashboard',
+            component: ()=>import("../pages/dashboard")
+        },
+        {
             path: '/dashboard',
             name: 'dashboard',
-            component: dashboard
+            component: ()=>import("../pages/dashboard")
         },
         {
             path: '/dashboard/:page',
             name: 'Dashboard',
-            component: dashboard,
+            component: ()=>import("../pages/dashboard"),
         },
         {
             path: '/calculator',
             name: 'calculator',
-            component: calculator
+            component: ()=>import("../pages/calculator")
         },
         {
             path: '/add/payment/*',
             name: 'AddPayment',
-            component: dashboard
+            component: ()=>import("../pages/dashboard")
+        },
+        {
+            path: '/edit/payment/*',
+            name: 'EditPayment',
+            component: ()=>import("../pages/dashboard")
         },
         {
             path: '*',
             name: 'NotFound',
-            component: Page404
+            component: ()=>import("../pages/Page404")
         }
     ]
 })
