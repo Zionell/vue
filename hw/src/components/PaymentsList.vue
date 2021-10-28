@@ -6,8 +6,8 @@
       <p>Category</p>
       <p>Cost</p>
     </div>
-    <div :class="[$style.row]" v-for="(item,ind) in list" :key="ind">
-      <p>{{ list.length-ind }}</p>
+    <div :class="[$style.row]" v-for="(item,ind) in getRenderPage" :key="ind">
+      <p>{{ ind+1 }}</p>
       <p>{{ item.date }}</p>
       <p>{{ item.category }}</p>
       <p>{{ item.cost }}</p>
@@ -16,27 +16,31 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "PaymentsList",
-  props:{
-    list:Array
+  computed: {
+    ...mapGetters(['getRenderPage'])
   }
 }
 </script>
 
 <style module>
-.wrapper{
+.wrapper {
   margin-top: 50px;
   min-height: 315px;
 }
-.row{
+
+.row {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   border: 1px solid #737373;
   border-radius: 10px;
   background: #e5e5e5;
 }
-.row:nth-child(odd){
+
+.row:nth-child(odd) {
   background: #999;
 }
 </style>

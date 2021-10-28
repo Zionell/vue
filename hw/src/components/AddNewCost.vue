@@ -5,20 +5,15 @@
     </button>
     <div :class="[$style.formWrapper]" v-show="addForm">
       <label>Choose date
-        <input v-model="date" type="date" required>
+        <input v-model="date" type="date" required="required">
       </label>
       <label>Choose category
-        <select v-model="category" required>
-          <option>Food</option>
-          <option>Medicine</option>
-          <option>Transport</option>
-          <option>Restaurant</option>
-          <option>Housing</option>
-          <option>Clothing</option>
+        <select v-model="category" required="required">
+          <option v-for="item in getCategory" :key="item">{{ item }}</option>
         </select>
       </label>
       <label>Add cost
-        <input v-model="cost" type="number" min="0" required>
+        <input v-model="cost" type="number" min="0" required="required">
       </label>
       <button :class="[$style.button]" @click="add">Add</button>
     </div>
@@ -26,6 +21,8 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from "vuex";
+
 export default {
   name: "AddNewCost",
   data(){
@@ -36,13 +33,17 @@ export default {
       cost:0,
     }
   },
+  computed:{
+    ...mapGetters(['getCategory'])
+  },
   methods:{
+    ...mapMutations(['setNewCost']),
     showForm(){
       this.addForm = !this.addForm
     },
     add(){
-      const {id, date, category, cost} = this
-      this.$emit("addCost",{id,date, category, cost})
+      let {id, date, category, cost} = this;
+      this.setNewCost({id,date, category, cost})
     }
   }
 }
