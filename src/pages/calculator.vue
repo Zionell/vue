@@ -1,5 +1,7 @@
 <template>
-  <Calculator/>
+  <v-container>
+    <Calculator/>
+  </v-container>
 </template>
 
 <script>

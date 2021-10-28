@@ -16,9 +16,9 @@ const store = new Vuex.Store({
             state.categories = payload
         },
         setNewCost(state, payload) {
-            if(state.paymentsList.indexOf(payload.oldData)===-1){
+            if (state.paymentsList.indexOf(payload.oldData) === -1) {
                 state.paymentsList.unshift(payload.data)
-            }else{
+            } else {
                 state.paymentsList.splice(state.paymentsList.findIndex(item => {
                     if (item === payload.oldData) {
                         return item
@@ -32,7 +32,7 @@ const store = new Vuex.Store({
     },
     getters: {
         getPaymentsList: state => state.paymentsList,
-        getCategory: state => state.categories
+        getCategory: state => state.categories,
     },
     actions: {
         fetchData({commit}) {

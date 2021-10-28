@@ -1,14 +1,15 @@
 <template>
-  <div :class="[$style.wrapper]">
-    <router-link
-        :class="[$style.page]"
-        v-for="page in getCountPages"
-        :key="page"
-        :to="'/dashboard/'+page"
-    >
-      {{ page }}
-    </router-link>
-  </div>
+  <v-container class="d-flex justify-center">
+      <v-btn
+          color="primary"
+          class="rounded-xl"
+          v-for="page in getCountPages"
+          :key="page"
+          :to="'/dashboard/'+page"
+      >
+        {{ page }}
+      </v-btn>
+  </v-container>
 </template>
 
 <script>
@@ -21,36 +22,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getPaymentsList']),
-    getCountPages(){
-      return Math.ceil(this.getPaymentsList.length/this.pageLength)
+    getCountPages() {
+      return Math.ceil(this.getPaymentsList.length / this.pageLength)
     }
   }
 }
 </script>
-
-<style module>
-.wrapper {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.page {
-  padding: 10px 15px;
-  border-radius: 100%;
-  border: 1px solid cadetblue;
-  background: cadetblue;
-  transition: 0.2s linear;
-  color: #000;
-  text-decoration: none;
-}
-
-.page:hover {
-  color: cadetblue;
-  background: #ffffff;
-}
-:global(.router-link-active) {
-  background: #ffffff;
-}
-</style>

@@ -1,14 +1,21 @@
 <template>
-  <div>
-    <header>
-      <h1>My personal costs</h1>
-    </header>
-    <main>
-      <AddNewCost/>
-      <PaymentsList :pageLength="pageLength"/>
-      <Paginate :pageLength="pageLength"/>
-    </main>
-  </div>
+  <v-container fluid>
+    <v-row>
+        <header>
+          <h1 class="font-weight-black text-h1 ma-10">My personal costs</h1>
+        </header>
+    </v-row>
+    <v-row>
+      <v-col>
+          <AddNewCost/>
+          <PaymentsList :pageLength="pageLength"/>
+          <Paginate :pageLength="pageLength"/>
+      </v-col>
+      <v-col>
+        <Diagram :class="[$style.diagram]"/>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -16,6 +23,7 @@ import PaymentsList from "../components/PaymentsList";
 import AddNewCost from "../components/AddNewCost";
 import Paginate from "../components/Paginate";
 import {mapActions} from "vuex";
+import Diagram from "../components/Diagram";
 
 export default {
   name: "dashboard",
@@ -27,7 +35,8 @@ export default {
   components: {
     PaymentsList,
     AddNewCost,
-    Paginate
+    Paginate,
+    Diagram
   },
   methods: {
     ...mapActions(['fetchData', 'fetchCategory'])
@@ -39,6 +48,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style module>
+.diagram{
+  width: 350px;
+  margin: 0 auto;
+}
 </style>
